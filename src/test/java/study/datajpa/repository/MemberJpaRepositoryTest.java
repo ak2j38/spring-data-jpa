@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.entity.Member;
 
@@ -55,6 +56,20 @@ class MemberJpaRepositoryTest {
 
         long deletedCnt = memberJpaRepository.count();
         assertThat(deletedCnt).isEqualTo(0);
+    }
+
+    @Test
+    public void findByUsernameAndAgeGreaterThen() {
+        Member m1 = new Member("A", 10);
+        Member m2 = new Member("A", 20);
+        memberJpaRepository.save(m1);
+        memberJpaRepository.save(m2);
+
+        List<Member> findMembers = memberJpaRepository.findByUsernameAndAgeGreaterThen("A", 15);
+
+        assertThat(findMembers.get(0).getUsername()).isEqualTo("A");
+        assertThat(findMembers.get(0).getAge()).isEqualTo(20);
+
     }
 
 }
