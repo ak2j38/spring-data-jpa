@@ -128,4 +128,16 @@ public class MemberRepositoryTest {
             System.out.println("name = " + name);
         }
     }
+
+    @Test
+    public void returnType() {
+        Member m1 = new Member("A", 10);
+        Member m2 = new Member("A", 20);
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+
+        List<Member> aaa = memberRepository.findListByUsername("A");
+    }
+
+
 }
